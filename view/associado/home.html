@@ -1,0 +1,365 @@
+<!-- Nav Bar -->
+<nav class="navbar navbar-fixed-top">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        <div class="nav navbar-nav">
+            <a class="" href="#/sistema/associado">
+                <img class="logo" alt="_logotipo" src="img/logotipo.svg">
+            </a>
+        </div>
+
+        <div class="menu pull-right">
+            <!--            <p>{{user.nome}}</p>-->
+            <button type="button" class="btn-sm btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span>Menu</span> <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a class="link" ng-click="showModalMudarSenha()">Mudar Senha</a>
+                </li>
+                <li>
+                    <a class="link" ng-click="logout()">Sair</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+<!-- Modal Fatura Associado -->
+<div class="modal fade" id="faturaAssociado">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalhes da Fatura do Associado</h4>
+            </div>
+            <div class="modal-body modal-body-fatura">
+                <div class="col-md-12 well metadados">
+
+                    <div class=" col-md-3">
+                        <label class="labelTitle">Status</label>
+                        <p>{{faturaAssociado.status}}</p>
+                    </div>
+
+                    <div class=" col-md-3">
+                        <label class="labelTitle">Data Abertura</label>
+                        <p>{{faturaAssociado.dataAbertura | date}}</p>
+                    </div>
+
+                    <div class=" col-md-3">
+                        <label class="labelTitle">Taxa Associativa</label>
+                        <p>{{faturaAssociado.taxaAssociativaUsada | currency}}</p>
+                    </div>
+                    <div class=" col-md-3">
+                        <label class="labelTitle">Valor Total</label>
+                        <p><strong>{{faturaAssociado.valorTotal | currency}}</strong></p>
+                    </div>
+                </div>
+
+
+                <div ng-show="faturaAssociado.checkins[0]">
+                    <p class="text-center"><strong>Checkins</strong></p>
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Código</th>
+                            <th class="labelTitle">Data uso</th>
+                            <th class="labelTitle">Data criação</th>
+                            <th class="labelTitle">Valor total</th>
+
+                        </tr>
+                        <tr ng-repeat="checkin in faturaAssociado.checkins">
+
+                            <td class="text-center">{{checkin.codigoDoCheckin}}</td>
+                            <td>{{checkin.dataUso | date}}</td>
+                            <td>{{checkin.createAt | date}}</td>
+                            <td>{{checkin.valor | currency}}</td>
+
+
+                        </tr>
+                    </table>
+                </div>
+                <div ng-show="faturaAssociado.auxiliosSaude[0]">
+                    <p class="text-center"><strong>Auxílio Saúde</strong></p>
+                    <table class="table table-hover">
+                        <tr>
+
+                            <th class="labelTitle">Data criação</th>
+                            <th class="labelTitle">Valor</th>
+
+                        </tr>
+                        <tr ng-repeat="aux in faturaAssociado.auxiliosSaude">
+
+                            <td>{{aux.createAt | date}}</td>
+                            <td>{{aux.valor | currency}}</td>
+
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Resetar Senha -->
+<div class="modal fade" id="mudarSenha">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Redefinir Senha</h4>
+            </div>
+            <div class="modal-body modal-body-mudarSenha">
+
+                <div class="panel-body container-fluid">
+
+                    <div class="container-fluid">
+
+                        <!--
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">Login</label>
+                            <p>{{userReset.login}}</p>
+                        </div>
+-->
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Senha Antiga</label>
+                            <input ng-model="antigaSenha" type="password" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Nova Senha (mínimo de 6 caracteres)</label>
+                            <input ng-model="novaSenha" type="password" class="form-control">
+                        </div>
+                        
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Repita Nova Senha</label>
+                            <input ng-model="novaSenha2" type="password" class="form-control">
+                        </div>
+
+                        <!--  <p class="danger">Senha Antiga Incorreta!</p>-->
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer form-inline">
+                <!--
+                <div class="form-group col-md-6">
+                    <button type="button" ng-click="" ng-disabled="true" class="btn btn-default btn-block">Cancelar</button>
+                </div>
+-->
+                <div class="form-group col-md-12">
+                    <button type="button" ng-disabled="novaSenha !== novaSenha2 || antigaSenha === undefined || novaSenha === undefined || novaSenha === '' " ng-click="mudarSenha()" class="btn btn-default btn-block">Mudar Senha</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+
+                <div class="panel-heading"><strong>Dados Pessoais</strong>
+                </div>
+                <div class="row220 panel-body">
+
+                    <div class="col-md-12">
+                        <label class="labelTitle">Nome</label>
+                        <p>{{user.nome}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labelTitle">CPF</label>
+                        <p>{{user.cpf}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labelTitle">Associado desde</label>
+                        <p>{{user.createAt | date}}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="panel panel-default mTop3">
+
+                <div class="panel-heading"><strong>Beneficios</strong></div>
+                <div class="row200 panel-body">
+                    <table class="table table-hover">
+
+                        <tr ng-repeat="beneficio in user.beneficios">
+                            <td>{{beneficio.nome}}</td>
+                            <td>
+                                <span ng-show="beneficio.status == 'INDISPONÍVEL'" class="label status label-default">{{beneficio.status}}</span>
+                                <span ng-show="beneficio.status == 'DISPONÍVEL'" class="label status label-success">{{beneficio.status}}</span>
+                            </td>
+                        </tr>
+
+                    </table>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Maícula</strong>
+                    <div class="dropdown-primary pull-right">
+
+                        <button type="button" class=" btn-sm btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span>{{matricula.codigo}}</span> <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="matricula in user.matriculas">
+                                <a class="link" ng-click="setMatricula(matricula)">{{matricula.codigo}}</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    </ul>
+                </div>
+                <div class="row470 panel-body ">
+
+                    <div ng-show="matricula">
+                        <div class="col-md-12 well metadados">
+                            <div class=" col-md-4">
+                                <label class="labelTitle">Número da Matrícula</label>
+                                <p>{{matricula.codigo}}</p>
+                            </div>
+                            <div class=" col-md-4">
+                                <label class="labelTitle">Crédito</label>
+                                <p>{{matricula.saldo | currency}}</p>
+                            </div>
+                            <div class=" col-md-4">
+                                <label class="labelTitle">Taxa Associativa</label>
+                                <p>{{user.taxaAssociativa | currency}}</p>
+                            </div>
+
+                        </div>
+
+
+                        <div>
+                            <p class="text-center"><strong>Faturas</strong></p>
+                            <table class="table table-hover">
+                                <tr>
+                                    <th class="labelTitle">Status</th>
+                                    <th class="labelTitle">Data</th>
+                                    <th class="labelTitle">Taxa</th>
+                                    <th class="labelTitle">Valor Total</th>
+
+                                </tr>
+                                <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in matricula.matriculaFaturas">
+                                    <td>{{fatura.status}}</td>
+                                    <td>{{fatura.dataAbertura | date}}</td>
+                                    <td>{{fatura.taxaAssociativaUsada | currency}}</td>
+                                    <td>{{fatura.valorTotal | currency}}</td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <!--
+                    <div class="col-md-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><strong>Chekins Mês Atual</strong>
+                            </div>
+                            <div class="row400 panel-body ">
+
+                                <table class="table table-hover">
+                                    <tr>
+                                       
+                                        <th class="labelTitle">Código</th>
+                                        <th class="labelTitle">Data Uso</th>
+                                        <th class="labelTitle">Valor</th>
+
+                                    </tr>
+                                    <tr ng-repeat="checkin in matricula.checkins | orderBy: 'dataUsocheckin'">
+
+                                        <td>{{checkin.codigoDoCheckin}}</td>
+                                        <td>{{checkin.dataUso | date}}</td>
+                                        <td>{{checkin.valor | currency}}</td>
+
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><strong>Aux. Saúde</strong></div>
+                            <div class="row400 panel-body ">
+
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th class="labelTitle">Data Solicitação</th>
+                                        <th class="labelTitle">Valor</th>
+
+
+                                    </tr>
+                                    <tr ng-repeat="aux in matricula.auxilioSaudeRestituiveis | orderBy: 'dataUsocheckin'">
+
+                                        <td>{{aux.createAt | date}}</td>
+                                        <td>{{aux.valor}}</td>
+
+
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+-->
+                </div>
+            </div>
+        </div>
+
+
+        <!--
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Limite Aux. Conveniado</strong></div>
+                <div class="row60 panel-body ">
+                    <p class="data"><strong>{{user.saldo | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Limite Aux. Saúde</strong></div>
+                <div class="row60 panel-body">
+                    <p class="data"><strong>{{user.saldo | currency}}</strong></p>
+                </div>
+            </div>
+        </div>      
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Valor da Fatura Em Aberto</strong></div>
+                <div class="row60 panel-body ">
+                    <p class="data"><strong>{{user.auxConveniadoAPagar | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+-->
+
+
+    </div>
+</div>

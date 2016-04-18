@@ -1,0 +1,205 @@
+<div ng-include="'view/admin/menu.html'">
+</div>
+
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        <div class="col-md-3 fixed">
+            <div class="panel panel-default ">
+                <div class="panel-heading"><strong>Conveniados</strong>
+
+                    <div class="pull-right">
+                        <span class="badge">{{conveniados.length}}</span>
+                    </div>
+
+                </div>
+
+                <div class="search">
+                    <input id='search' ng-model="search" class="form-control" type="text" placeholder="buscar por nome fantasia">
+                </div>
+
+                <div class="row470 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr ng-click='getConveniado(conveniado)' ng-repeat="conveniado in conveniados | filter:search | orderBy: 'nome'">
+                            <td class="link">{{conveniado.nomeFantasia | uppercase | limitTo:50}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="col-md-12 paddingtop0">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Dados</strong>
+                        <div class="pull-right btn-header-painel">
+                            <button ng-hide='!conveniadoInfo.id' ng-click='showModalResetSenha(conveniadoInfo.usuario)' class="btn btn-default btn-sm">
+                                <span>Redefinir Senha</span>
+                            </button>
+                            <button ng-disabled="true" ng-hide='!conveniadoInfo.id' ng-click='' class="btn btn-default btn-sm">
+                                <span>Imprimir</span>
+                            </button>
+                            <button ng-hide='!conveniadoInfo.id' ng-click='editConveniado()' class="btn btn-default btn-sm">
+                                <span>Editar</span>
+                            </button>
+                            <button ng-hide='!conveniadoInfo.id' ng-click='showModalconfirmacao(removeConveniado)' class="btn btn-default btn-sm">
+                                <span>Excluir</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row250 panel-body scroll">
+                        <div class="col-md-7">
+                            <label ng-show="conveniadoInfo.razaoSocial" class="labelTitle">Nome do Responsável</label>
+                            <p>{{conveniadoInfo.responsavelByConveniado.nome}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.responsavelByConveniado.cpf" class="form-group col-md-2">
+                            <label class="labelTitle">CPF</label>
+                            <p>{{conveniadoInfo.responsavelByConveniado.cpf}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.imagemLogomarca" class="form-group col-md-3">
+                            <a target="blank" href={{conveniadoInfo.imagemLogomarca.link}}>
+                                <div class="doc col-md-11">
+                                    Logotipo
+                                </div>
+                            </a>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.responsavelByConveniado.rg" class="form-group col-md-4">
+                            <label class="labelTitle">RG</label>
+                            <p>{{conveniadoInfo.responsavelByConveniado.rg}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.responsavelByConveniado.contatos[0].valor" class="form-group col-md-4">
+                            <label class="labelTitle">Celular</label>
+                            <p>{{conveniadoInfo.responsavelByConveniado.contatos[0].valor}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.razaoSocial" class="form-group col-md-4">
+                            <label class="labelTitle">Razão Social</label>
+                            <p>{{conveniadoInfo.razaoSocial}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.nomeFantasia" class="form-group col-md-3">
+                            <label class="labelTitle">Nome de Fantasia</label>
+                            <p>{{conveniadoInfo.nomeFantasia}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.cnpj" class="form-group col-md-3">
+                            <label class="labelTitle">CNPJ</label>
+                            <p>{{conveniadoInfo.cnpj}}</p>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label ng-show="conveniadoInfo.enderecos[0].logradouro" class="labelTitle">Logradouro</label>
+                            <p>{{conveniadoInfo.enderecos[0].logradouro}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.enderecos[0].cep" class="form-group col-md-2">
+                            <label class="labelTitle">CEP</label>
+                            <p>{{conveniadoInfo.enderecos[0].cep}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.enderecos[0].bairro" class="form-group col-md-4">
+                            <label class="labelTitle">Bairro</label>
+                            <p>{{conveniadoInfo.enderecos[0].bairro}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.enderecos[0].cidade" class="form-group col-md-4">
+                            <label class="labelTitle">Cidade</label>
+                            <p>{{conveniadoInfo.enderecos[0].cidade}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.enderecos[0].uf" class="form-group col-md-2">
+                            <label class="labelTitle">UF</label>
+                            <p>{{conveniadoInfo.enderecos[0].uf}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.contatos[1].valor" class="form-group col-md-4">
+                            <label class="labelTitle">Telefone</label>
+                            <p>{{conveniadoInfo.contatos[1].valor}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.contatos[2].valor" class="form-group col-md-4">
+                            <label class="labelTitle">Celular</label>
+                            <p>{{conveniadoInfo.contatos[2].valor}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.contatos[0].valor" class="form-group col-md-4">
+                            <label class="labelTitle">Email</label>
+                            <p>{{conveniadoInfo.contatos[0].valor}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.dadosBancarios[0].favorecido" class="form-group col-md-6">
+                            <label class="labelTitle">Favorecido</label>
+                            <p>{{conveniadoInfo.dadosBancarios[0].favorecido}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.dadosBancarios[0].bancoNome" class="form-group col-md-2">
+                            <label class="labelTitle">Banco</label>
+                            <p>{{conveniadoInfo.dadosBancarios[0].bancoNome}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.dadosBancarios[0].agencia" class="form-group col-md-2">
+                            <label class="labelTitle">Agência</label>
+                            <p>{{conveniadoInfo.dadosBancarios[0].agencia}}</p>
+                        </div>
+
+                        <div ng-show="conveniadoInfo.dadosBancarios[0].conta" class="form-group col-md-2">
+                            <label class="labelTitle">Conta</label>
+                            <p>{{conveniadoInfo.dadosBancarios[0].conta}}</p>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Faturas</strong>
+                        <div class=" btn-group pull-right">
+                            <!--
+                        <button type="button" class="btn-heading btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span>2015</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">2015</a></li>
+                            <li><a href="#">2014</a></li>
+
+                        </ul>
+-->
+                        </div>
+                    </div>
+                    <div class="row200 panel-body scroll">
+
+                        <table ng-show="conveniadoInfo.conveniadoFaturas[0]" class="table table-hover">
+                            <tr>
+                                <th class="labelTitle">Status</th>
+                                <th class="labelTitle">Fechamento</th>
+                                <th class="labelTitle">Valo Pago</th>
+                                <th class="labelTitle">Valor da Fatura</th>
+                                <th class="labelTitle">Vencimento</th>
+
+                            </tr>
+                            <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in conveniadoInfo.conveniadoFaturas | orderBy:'fatura.fechamento'">
+
+                                <td>{{fatura.status}}</td>
+                                <td>{{fatura.fechamento | date}}</td>
+                                <td>{{fatura.valorPago | currency}}</td>
+                                <td>{{fatura.valorTotal | currency}}</td>
+                                <td>{{fatura.vencimento | date}}</td>
+
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

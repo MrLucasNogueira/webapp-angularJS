@@ -1,0 +1,316 @@
+<div ng-include="'view/admin/menu.html'"></div>
+
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+
+        <div class="col-md-6">
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Conveniados com Faturas Fechadas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Nome Fantasia</th>
+                            <th class="labelTitle">Razão Social</th>
+                            <th class="labelTitle">Valo Pago</th>
+                            <th class="labelTitle">Valor da Fatura</th>
+                            <th class="labelTitle">Vencimento</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in FaturaConveniadoFechada">
+
+                            <td>{{fatura.conveniadoNomeFantasia}}</td>
+                            <td>{{fatura.conveniadoRazaoSocial}}</td>
+                            <td>{{fatura.valorPago | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+                            <td>{{fatura.vencimento | date}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Solicitação de Adiantamento de Checkins</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Nome Fantasia</th>
+                            <th class="labelTitle">Razão Social</th>
+                            <th class="labelTitle">Valo Pago</th>
+                            <th class="labelTitle">Valor da Fatura</th>
+                            <th class="labelTitle">Vencimento</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in FaturaConveniadoAdiantamento">
+
+                            <td>{{fatura.conveniadoNomeFantasia}}</td>
+                            <td>{{fatura.conveniadoRazaoSocial}}</td>
+                            <td>{{fatura.valorPago | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+                            <td>{{fatura.vencimento | date}}</td>
+                            {{fatura}}
+                            
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Conveniados com Faturas Abertas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Nome Fantasia</th>
+                            <th class="labelTitle">Razão Social</th>
+                            <th class="labelTitle">Valo Pago</th>
+                            <th class="labelTitle">Valor da Fatura</th>
+                            <th class="labelTitle">Vencimento</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in FaturaConveniadoAberta">
+
+                            <td>{{fatura.conveniadoNomeFantasia}}</td>
+                            <td>{{fatura.conveniadoRazaoSocial}}</td>
+                            <td>{{fatura.valorPago | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+                            <td>{{fatura.vencimento | date}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Conveniados com Faturas Em Alerta</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Nome Fantasia</th>
+                            <th class="labelTitle">Razão Social</th>
+                            <th class="labelTitle">Valo Pago</th>
+                            <th class="labelTitle">Valor da Fatura</th>
+                            <th class="labelTitle">Vencimento</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in FaturaConveniadoEmAlerta">
+
+                            <td>{{fatura.conveniadoNomeFantasia}}</td>
+                            <td>{{fatura.conveniadoRazaoSocial}}</td>
+                            <td>{{fatura.valorPago | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+                            <td>{{fatura.vencimento | date}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Conveniados com Faturas Pagas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Nome Fantasia</th>
+                            <th class="labelTitle">Razão Social</th>
+                            <th class="labelTitle">Valo Pago</th>
+                            <th class="labelTitle">Valor da Fatura</th>
+                            <th class="labelTitle">Vencimento</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in FaturaConveniadoPagas">
+
+                            <td>{{fatura.conveniadoNomeFantasia}}</td>
+                            <td>{{fatura.conveniadoRazaoSocial}}</td>
+                            <td>{{fatura.valorPago | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+                            <td>{{fatura.vencimento | date}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Associados Faturas Abertas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Matrícula</th>
+                            <th class="labelTitle">Nome</th>
+                            <th class="labelTitle">Valor Averbado</th>
+                            <th class="labelTitle">Valor Total</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in AssociadoFaturasAbertas">
+                            <td>{{fatura.matriculaCodigo}}</td>
+                            <td>{{fatura.associadoNome | limitTo:25}}</td>
+                            <td>{{fatura.valorAverbado | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Associados Faturas Averbadas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Matrícula</th>
+                            <th class="labelTitle">Nome</th>
+                            <th class="labelTitle">Valor Averbado</th>
+                            <th class="labelTitle">Valor Total</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in AssociadoFaturasAverbadas">
+                            <td>{{fatura.matriculaCodigo}}</td>
+                            <td>{{fatura.associadoNome | limitTo:25}}</td>
+                            <td>{{fatura.valorAverbado | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Associados Faturas Fechadas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Matrícula</th>
+                            <th class="labelTitle">Nome</th>
+                            <th class="labelTitle">Valor Averbado</th>
+                            <th class="labelTitle">Valor Total</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in AssociadoFaturasFechadas">
+                            <td>{{fatura.matriculaCodigo}}</td>
+                            <td>{{fatura.associadoNome | limitTo:25}}</td>
+                            <td>{{fatura.valorAverbado | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Associados Faturas com Alerta</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Matrícula</th>
+                            <th class="labelTitle">Nome</th>
+                            <th class="labelTitle">Valor Averbado</th>
+                            <th class="labelTitle">Valor Total</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in AssociadoFaturasEmAlerta">
+                            <td>{{fatura.matriculaCodigo}}</td>
+                            <td>{{fatura.associadoNome | limitTo:25}}</td>
+                            <td>{{fatura.valorAverbado | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel panel-default mTop30">
+                <div class="panel-heading"><strong>Associados com Faturas Pagas</strong>
+                </div>
+                <div class="row200 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Matrícula</th>
+                            <th class="labelTitle">Nome</th>
+                            <th class="labelTitle">Valor Averbado</th>
+                            <th class="labelTitle">Valor Total</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in AssociadoFaturasPagas">
+                            <td>{{fatura.matriculaCodigo}}</td>
+                            <td>{{fatura.associadoNome | limitTo:25}}</td>
+                            <td>{{fatura.valorAverbado | currency}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <!--
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Lançar Arquivo do Governo</strong>
+                    <div class="pull-right btn-header-painel">
+                        <button ng-click='' class="btn btn-default btn-sm atualizar" data-toggle="tooltip" data-placement="bottom" title="atualizar">
+                            lançar arquivo
+                        </button>
+                    </div>
+                    
+                </div>
+                <div class="row300 panel-body scroll">
+                   
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Data de Lançamento</th>
+                            <th class="labelTitle">Mês de Referência</th>
+                            <th class="labelTitle">Total Recebido</th>
+                            
+                            
+                        </tr>
+                        <tr class="link" ng-click="" ng-repeat="">
+                           
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            
+                            
+                        </tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Estatisticas dos Arquivos</strong></div>
+                <div class="row300 panel-body scroll">
+                   
+                    
+                    
+                </div>
+            </div>
+        </div>
+-->
+
+    </div>
+</div>

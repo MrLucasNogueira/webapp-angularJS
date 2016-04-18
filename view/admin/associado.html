@@ -1,0 +1,285 @@
+<div ng-include="'view/admin/menu.html'"></div>
+
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        <div class="col-md-3">
+
+            <!-- Painel Associados -->
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    <strong>Associados </strong>
+                    <div class="pull-right">
+                        <span class="badge">{{associados.length}}</span>
+                        <!--
+                        <button ng-click='updateAssociados()' class="btn btn-default btn-sm atualizar" data-toggle="tooltip" data-placement="bottom" title="Atualizar">
+                            <span  class="glyphicon glyphicon glyphicon-refresh"></span>
+                            
+                        </button>
+-->
+
+                    </div>
+                </div>
+
+                <div class="search">
+                    <input id='search' ng-model="search" class="form-control" type="text" placeholder="buscar por nome ou cpf">
+                </div>
+
+                <div class="row500 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr class="link" ng-click='getAssociado(associado)' ng-repeat="associado in associados | filter:search | orderBy: 'nome'">
+                            <td>{{associado.nome | uppercase}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-9">
+
+            <div class="col-md-12 paddingtop0">
+
+                <!-- Painel Dados -->
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Dados <span ng-show="associadoInfo.documentosLength"> ({{documentosLength}} documentos anexados)</span></strong>
+                        <div class="pull-right btn-header-painel">
+
+                           <button ng-hide='!associadoInfo.nome' ng-click='showModalResetSenha(associadoInfo.usuario)' class="btn btn-default btn-sm">
+                                <span>Redefinir Senha</span>
+                            </button>
+                            <button ng-hide='!associadoInfo.nome' ng-click='getDadosAssociado()' class="btn btn-default btn-sm">
+                                <span>Imprimir</span>
+                            </button>
+                            <button ng-hide='!associadoInfo.nome' ng-click='createAuxSaudeModal()' class="btn btn-default btn-sm">
+                                <span>Liberar Aux. Saúde</span>
+                            </button>
+                            <button ng-hide='!associadoInfo.nome' ng-click='cadCheckin()' class="btn btn-default btn-sm">
+                                <span>Cadastrar Chekin</span>
+                            </button>
+                            <button ng-hide='!associadoInfo.nome' ng-click='editAssociado(associadoInfo)' class="btn btn-default btn-sm">
+                                <span>Editar</span>
+                            </button>
+                            <button ng-hide='!associadoInfo.nome' ng-click='showModalconfirmacao(removeAssociado)' class="btn btn-default btn-sm">
+                                <span>Excluir</span>
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="row240 panel-body scroll">
+                        <div class="col-md-9">
+                            <div ng-show="associadoInfo.nome" class=" col-md-6">
+                                <label class="labelTitle">Nome</label>
+                                <p>{{associadoInfo.nome}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.nomeResponsavel" class=" col-md-6">
+                                <label class="labelTitle">Nome do Responsável</label>
+                                <p>{{associadoInfo.nomeResponsavel}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.dataNascimento" class="col-md-4">
+                                <label class="labelTitle">Data de Nascimento</label>
+                                <p>{{associadoInfo.dataNascimento}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.rg" class=" col-md-4">
+                                <label class="labelTitle">RG</label>
+                                <p>{{associadoInfo.rg}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.cpf" class=" col-md-4">
+                                <label class="labelTitle">CPF</label>
+                                <p>{{associadoInfo.cpf}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.estadoCivil" class=" col-md-2">
+                                <label class="labelTitle">Estado Civil</label>
+                                <p>{{associadoInfo.estadoCivil}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.sexo" class=" col-md-2">
+                                <label class="labelTitle">Sexo</label>
+                                <p>{{associadoInfo.sexo}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.saldo" class=" col-md-2">
+                                <label class="labelTitle">Saldo</label>
+                                <p>{{associadoInfo.saldo | currency}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.enderecos[0].logradouro" class="form-group col-md-6">
+                                <label class="labelTitle">Logradouro</label>
+                                <p>{{associadoInfo.enderecos[0].logradouro}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.enderecos[0].bairro" class="form-group col-md-4">
+                                <label class="labelTitle">Bairro</label>
+                                <p>{{associadoInfo.enderecos[0].bairro}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.enderecos[0].cep" class="form-group col-md-3">
+                                <label class="labelTitle">CEP</label>
+                                <p>{{associadoInfo.enderecos[0].cep}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.enderecos[0].cidade" class="form-group col-md-3">
+                                <label class="labelTitle">Cidade</label>
+                                <p>{{associadoInfo.enderecos[0].cidade}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.enderecos[0].estado" class="form-group col-md-4">
+                                <label class="labelTitle">UF</label>
+                                <p>{{associadoInfo.enderecos[0].uf}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.contatos[0].valor" class="form-group col-md-4">
+                                <label class="labelTitle">{{associadoInfo.contatos[0].tipo}}</label>
+                                <p>{{associadoInfo.contatos[0].valor}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.contatos[1].valor" class="form-group col-md-4">
+                                <label class="labelTitle">{{associadoInfo.contatos[1].tipo}}</label>
+                                <p>{{associadoInfo.contatos[1].valor}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.contatos[2].valor" class="form-group col-md-4">
+                                <label class="labelTitle">{{associadoInfo.contatos[2].tipo}}</label>
+                                <p>{{associadoInfo.contatos[2].valor}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.contatos[3].valor" class="form-group col-md-4">
+                                <label class="labelTitle">{{associadoInfo.contatos[3].tipo}}</label>
+                                <p>{{associadoInfo.contatos[3].valor}}</p>
+                            </div>
+
+                            <div ng-show="associadoInfo.contatos[3].valor" class="form-group col-md-4">
+                                <label class="labelTitle">{{associadoInfo.contatos[3].tipo}}</label>
+                                <p>{{associadoInfo.contatos[3].valor}}</p>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3">
+
+                            <div ng-show="associadoInfo.comprovanteEndereco">
+                                <label class="labelTitle labelTitleFiles">Comprovante de Endereço</label>
+                                <a target="blank" href={{associadoInfo.comprovanteEndereco.link}}>
+                                    <div class="doc col-md-11">
+                                        {{associadoInfo.comprovanteEndereco.name | limitTo:16}}
+                                    </div>
+                                </a>
+                            </div>
+
+
+                            <div ng-show="associadoInfo.comprovanteContraCheque">
+                                <label class="labelTitle labelTitleFiles">Contra Cheque</label>
+                                <a target="blank" href={{associadoInfo.comprovanteContraCheque.link}}>
+                                    <div class="doc col-md-11">
+                                        {{associadoInfo.comprovanteContraCheque.name | limitTo:16}}
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div ng-show="associadoInfo.comprovanteRg">
+                                <label class="labelTitle labelTitleFiles">RG</label>
+                                <a target="blank" href={{associadoInfo.comprovanteRg.link}}>
+                                    <div class="doc col-md-11">
+                                        {{associadoInfo.comprovanteRg.name | limitTo:16}}
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-8">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Matrículas </strong>
+
+                        <div ng-hide='!associadoInfo.nome' class="btn-group pull-right btn-header-painel">
+
+                            <button type="button" class=" btn-sm btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span>{{matricula.codigo}} </span> <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="matricula in associadoInfo.matriculas">
+                                    <a class="link" ng-click="setMatricula(matricula)">{{matricula.codigo}}</a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                    <div class="row250 panel-body scroll">
+                        <div ng-hide='!associadoInfo.nome'>
+                            <div class="col-md-12 well metadados">
+                                <div class=" col-md-6">
+                                    <label class="labelTitle">Margem</label>
+                                    <p>{{matricula.margem | currency}}</p>
+                                </div>
+                                <div class=" col-md-6">
+                                    <label class="labelTitle">Saldo</label>
+                                    <p>{{matricula.saldo | currency}}</p>
+                                </div>
+
+                            </div>
+                            <p class="text-center"><strong>Faturas</strong></p>
+                            <table class="table table-hover">
+                                <tr>
+                                    <th class="labelTitle">Status</th>
+                                    <th class="labelTitle">Taxa</th>
+                                    <th class="labelTitle">Valor Averbado</th>
+                                    <th class="labelTitle">Valor Total</th>
+
+                                </tr>
+                                <tr class="link" ng-click="showModalFaturaAssociado(fatura)" ng-repeat="fatura in matricula.matriculaFaturas">
+                                    <td>{{fatura.status}}</td>
+                                    <td>{{fatura.taxaAssociativaUsada | currency}}</td>
+                                    <td>{{fatura.valorAverbado | currency}}</td>
+                                    <td>{{fatura.valorTotal | currency}}</td>
+
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <!-- Painel Benefícios -->
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Benefícios</strong>
+                    </div>
+                    <div class="row250 panel-body">
+                        <table class="table table-hover">
+
+                            <tr class="" ng-repeat="beneficio in associadoInfo.beneficios">
+                                <td>{{beneficio.nome}}</td>
+                                <td>
+                                    <span ng-show="beneficio.status == 'INDISPONÍVEL'" class="label status label-default">{{beneficio.status}}</span>
+                                    <span ng-show="beneficio.status == 'DISPONÍVEL'" class="label status label-success">{{beneficio.status}}</span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

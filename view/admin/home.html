@@ -1,0 +1,93 @@
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+<div ng-include="'view/admin/menu.html'"></div>
+
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Faturamento</strong></div>
+                <div class="row60 panel-body body">
+                    <p class="data"><strong>{{estatistica.faturamento | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Aux.Saúde Liberado</strong></div>
+                <div class="row60 panel-body body">
+                    <p class="data"><strong>{{estatistica.auxilioSaude | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Taxa Associativa</strong></div>
+                <div class="row60 panel-body body">
+                    <p class="data"><strong>{{estatistica.taxaAssociativa | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Receitas</strong></div>
+                <div class="row60 panel-body body">
+                    <p class="data"><strong>{{estatistica.receita | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                   
+                    <strong>Gráficos Estatísticos</strong>
+                    
+                    <div ng-show="!user.periodoDeAverbacao" class="pull-right">
+                        <span class="badge">periodo de averbação aberto</span>
+                    </div>
+                    <div ng-show="user.periodoDeAverbacao" class="pull-right">
+                        <span class="badge">periodo de averbação fechado</span>
+                    </div>
+                </div>
+
+                <div class="row400 panel-body">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Associados com pendências</strong>
+
+                    <div class="pull-right">
+
+                        <span class="badge">{{associadosPendencias.length}}</span>
+
+                    </div>
+
+                </div>
+
+                <div class="search">
+                    <input id='search' ng-model="searchAssociadoPendencias" class="form-control" type="text" placeholder="buscar por nome">
+                </div>
+
+                <div class="row365 panel-body scroll">
+
+                    <table class="table table-hover">
+                        <tr class="link" ng-click='getAssociadoPendencia(associado)' ng-repeat="associado in associadosPendencias | filter:searchAssociadoPendencias | orderBy: 'nome'">
+                            <td>{{associado.nome | uppercase}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

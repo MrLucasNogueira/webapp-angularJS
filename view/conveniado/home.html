@@ -1,0 +1,375 @@
+<!-- Nav Bar -->
+<nav class="navbar navbar-fixed-top">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        <div class="nav navbar-nav">
+            <a class="" href="#/sistema/conveniado">
+                <img class="logo" alt="_logotipo" src="img/logotipo.svg">
+            </a>
+        </div>
+
+        <div class="menu pull-right">
+
+            <button type="button" class="btn-sm btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span>Menu</span> <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu">
+                <li><a class="link" ng-click="descontarCheckinModal()">Descontar Chekin</a></li>
+                <li><a class="link" ng-click="showModalMudarSenha()">Mudar Senha</a></li>
+                <li><a class="link" ng-click="logout()">Sair</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+<!--Modal Descontar Checkin-->
+<div class="modal fade" id="descontarCheckin">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Descontar Checkin</h4>
+            </div>
+            <div class="modal-body modal-body-descontarCheckin">
+                <form name="FormCheckin">
+
+                    <div class="form-group col-md-12" ng-class="{ 'has-error' : FormCheckin.numero.$invalid}">
+                        <label>Código do Checkin<small class="labelTitle"> [Obrigatório]</small></label>
+                        <input name="numero" ng-model="checkin.codigoDoCheckin" type="text" ng-required="true" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-12" ng-class="{ 'has-error' : FormCheckin.checkin.$invalid}">
+                        <label>CPF do Associado<small class="labelTitle"> [Obrigatório]</small></label>
+                        <input name="checkin" ng-model="checkin.associadoCpf" type="text" ng-required="true" class="form-control">
+                    </div>
+
+                    {{responseCreateCheckin}}
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button ng-click="createCheckin(checkin)" ng-disabled="FormCheckin.$invalid" type="button" class="btn btn-default btn-block">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Resetar Senha -->
+<div class="modal fade" id="mudarSenha">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Redefinir Senha</h4>
+            </div>
+            <div class="modal-body modal-body-mudarSenha">
+
+                <div class="panel-body container-fluid">
+
+                    <div class="container-fluid">
+
+                        <!--
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">Login</label>
+                            <p>{{userReset.login}}</p>
+                        </div>
+-->
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Senha Antiga</label>
+                            <input ng-model="antigaSenha" type="password" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Nova Senha (mínimo de 6 caracteres)</label>
+                            <input ng-model="novaSenha" type="password" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Repita Nova Senha</label>
+                            <input ng-model="novaSenha2" type="password" class="form-control">
+                        </div>
+
+                        <!--  <p class="danger">Senha Antiga Incorreta!</p>-->
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer form-inline">
+                <!--
+                <div class="form-group col-md-6">
+                    <button type="button" ng-click="" ng-disabled="true" class="btn btn-default btn-block">Cancelar</button>
+                </div>
+-->
+                <div class="form-group col-md-12">
+                    <button type="button" ng-disabled="novaSenha !== novaSenha2 || antigaSenha === undefined || novaSenha === undefined || novaSenha === '' " ng-click="mudarSenha()" class="btn btn-default btn-block">Mudar Senha</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Valor Recebido</strong></div>
+                <div class="row60 panel-body ">
+                    <p class="data"><strong>{{user.valorTotalRecebido | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Quantidade de Checkins Recebidos</strong></div>
+                <div class="row60 panel-body ">
+                    <p class="data"><strong>{{user.checkinsPagos.length}}</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Valor a Receber</strong></div>
+                <div class="row60 panel-body ">
+                    <p class="data"><strong>{{user.valorAReceber | currency}}</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Quantidade de Checkins a Receber</strong></div>
+                <div class="row60 panel-body ">
+                    <p class="data"><strong>{{user.checkinsEmAberto.length}}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Checkins Descontados Recebidos</strong></div>
+                <div class="row400 panel-body ">
+                   
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Data</th>
+                            <th class="labelTitle">Número</th>
+                            <th class="labelTitle">Valor</th>
+                            <th class="labelTitle">Nome do Associado</th>
+                            
+                        </tr>
+                        <tr ng-repeat="check in user.checkinsPagos | orderBy: 'dataUsocheckin'">
+                            <td>{{check.createAt | date}}</td>
+                            <td>{{check.numero}}</td>
+                            <td>{{check.valor | currency}}</td>
+                            <td>{{check.associadoNome}}</td>
+                            
+                        </tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        
+         <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Checkins Descontados a Receber</strong></div>
+                <div class="row400 panel-body ">
+                   
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Data</th>
+                            <th class="labelTitle">Número</th>
+                            <th class="labelTitle">Valor</th>
+                            <th class="labelTitle">Nome do Associado</th>
+                            
+                        </tr>
+                        <tr ng-repeat="check in user.checkinsEmAberto | orderBy: 'dataUsocheckin'">
+                            <td>{{check.createAt | date}}</td>
+                            <td>{{check.numero}}</td>
+                            <td>{{check.valor | currency}}</td>
+                            <td>{{check.associadoNome}}</td>
+                            
+                        </tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+-->
+
+<!-- Modal Fatura Conveniado -->
+<div class="modal fade" id="faturaConveniado">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalhes da Fatura do Conveniado</h4>
+            </div>
+            <div class="modal-body modal-body-fatura scroll">
+                <div class="col-md-12 well metadados">
+                    <div class="col-md-8">
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Data Abertura</label>
+                            <p>{{faturaConveniado.abertura | date}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Data Fechamento</label>
+                            <p>{{faturaConveniado.fechamento | date}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Pago</label>
+                            <p>{{faturaConveniado.valorPago | currency}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor a Receber</label>
+                            <p><strong>{{faturaConveniado.valorTotal | currency}}</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a ng-show="faturaConveniado.comprovantePagamento" href="{{faturaConveniado.comprovantePagamento.link}}" target="blank" class="doc col-md-11">
+                            <label>{{faturaConveniado.comprovantePagamento.name | limitTo:10}}</label>
+                            <button type="button" class="close" ng-click="removeFile(faturaConveniado.comprovantePagamento)"><span class="span-black">&times;</span>
+                            </button>
+                        </a>
+                    </div>
+
+
+                </div>
+                <div ng-show="faturaConveniado.checkins[0]" class="col-md-12">
+                    <p class="text-center"><strong>Checkins</strong></p>
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Código</th>
+                            <th class="labelTitle">Nome do Associado</th>
+                            <th class="labelTitle">Data Uso</th>
+                            <th class="labelTitle">Cpf</th>
+                            <th class="labelTitle">Valor total</th>
+                            <th class="labelTitle">Valor adiantamento</th>
+                            <th class="labelTitle"></th>
+
+                        </tr>
+                        <tr ng-repeat="checkin in faturaConveniado.checkins">
+
+                            <td class="text-center">{{checkin.codigoDoCheckin}}</td>
+                            <td>{{checkin.associadoNome | limitTo: 25}}</td>
+                            <td>{{checkin.dataUso | date}}</td>
+                            <td>{{checkin.associadoCpf}}</td>
+                            <td>{{checkin.valor | currency}}</td>
+                            <td>{{checkin.valorAdiantamento | currency}}</td>
+                            <td>
+                                <button ng-click="adiantarPagamento(checkin);checkin.pediuAdiantamento = true;" ng-disabled="checkin.conveniadoPago || checkin.pediuAdiantamento" class="btn btn-xs btn-default">Adiantar</button>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+
+        <div class="col-md-3">
+            <div class="panel panel-default">
+
+                <div class="panel-heading"><strong>Dados Pessoais</strong>
+                </div>
+                <div class="row240 panel-body">
+
+                    <div class="col-md-12">
+                        <label class="labelTitle">Nome Fantasia</label>
+                        <p>{{user.nomeFantasia}}</p>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labelTitle">CNPJ</label>
+                        <p>{{user.cnpj}}</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="labelTitle">Dia de Pagamento</label>
+                        <p>{{user.diaDePagamento}}</p>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="img-logo" style="background-image: url('{{user.imagemLogomarca.link}}')"></div>
+            
+
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Faturas</strong>
+                    <!--
+                    <div class="dropdown-primary pull-right">
+
+                        <button type="button" class=" btn-sm btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span>Data da Fatura</span> <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="fatura in user.conveniadoFaturas">
+                                <a class="link" ng-click="setFatura(fatura)">{{fatura.abertura | date}}</a>
+                            </li>
+                        </ul>
+
+                    </div>
+-->
+                    </ul>
+                </div>
+                <div class="row470 panel-body ">
+
+                    <table ng-show="user.conveniadoFaturas[0]" class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Status</th>
+                            <th class="labelTitle">Fechamento</th>
+                            <th class="labelTitle">Valor da Fatura</th>
+                            <th class="labelTitle">Vencimento</th>
+
+                        </tr>
+                        <tr class="link" ng-click="showModalFaturaConveniado(fatura)" ng-repeat="fatura in user.conveniadoFaturas | orderBy:'fatura.fechamento'">
+
+                            <td>{{fatura.status}}</td>
+                            <td>{{fatura.fechamento | date}}</td>
+                            <td>{{fatura.valorTotal | currency}}</td>
+                            <td>{{fatura.vencimento | date}}</td>
+
+                        </tr>
+                    </table>
+                        <div class="col-md-12">
+                            
+                            <p><small>O valor dos checkins aqui descontados serão pagos na proxima data de vencimento após 30 dias da data que o checkin foi lançado.</small></p>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

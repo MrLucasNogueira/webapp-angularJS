@@ -1,0 +1,1024 @@
+<!-- Modal Conveniado -->
+<div class="modal fade" id="cadConveniado" tabindex="-1" role="dialog" aria-labelledby="cadConveniado" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Cadastrar Conveniado</h4>
+            </div>
+            <div class="modal-body modal-body-con">
+                <form name="FormConveniado">
+                    <div class="form-group col-md-5" ng-class="{ 'has-error' : FormConveniado.name.$invalid }">
+                        <label>Nome do Responsável<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="name" ng-model="conveniado.responsavelByConveniado.nome" type="text" class="form-control" ng-required="true" ng-minlength="10">
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormConveniado.telefone.$invalid || conveniado.responsavelByConveniado.contatos[0].valor === undefined || conveniado.responsavelByConveniado.contatos[0].valor === ''}">
+                        <label>Telefone<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input ng-pattern="/^\d{10,11}$/" name="telefone" ng-model="conveniado.responsavelByConveniado.contatos[0].valor" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label>Email</label>
+                        <input ng-model="conveniado.responsavelByConveniado.contatos[1].valor" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Dia Pagamento</label>
+                        <input ng-model="conveniado.diaDePagamento" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-3" ng-class="{ 'has-error' : FormConveniado.cpf.$invalid}">
+                        <label>CPF <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="cpf" ng-model="conveniado.responsavelByConveniado.cpf" type="text" class="form-control" ng-required="true" ng-pattern="/^\d{11}$/" placeholder="11 digitos">
+                    </div>
+
+                    <div class="form-group col-md-3" ng-class="{ 'has-error' : FormConveniado.rg.$invalid}">
+                        <label>RG <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="rg" ng-model="conveniado.responsavelByConveniado.rg" ng-minlength="5" type="text" class="form-control" ng-required="true" placeholder="mais de 5 digitos">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Orgão Emissor</label>
+                        <input ng-model="conveniado.responsavelByConveniado.orgaoEmissor" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Estado Civil</label>
+                        <select ng-model="conveniado.responsavelByConveniado.estadoCivil" class="form-control">
+                            <option value>SELECIONE</option>
+                            <option>SOLTEIRO</option>
+                            <option>CASADO</option>
+                            <option>VIÚVO</option>
+                            <option>OUTROS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Sexo</label>
+                        <select ng-model="conveniado.responsavelByConveniado.sexo" class="form-control">
+                            <option value>SELECIONE</option>
+                            <option>MASCULINO</option>
+                            <option>FEMININO</option>
+                        </select>
+                    </div>
+
+                    <hr class="col-md-12">
+
+                    <div class="form-group col-md-6" ng-class="{ 'has-error' : FormConveniado.rSocial.$invalid }">
+                        <label>Razão Social<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="rSocial" ng-model="conveniado.razaoSocial" type="text" class="form-control" ng-required="true" ng-minlength="10">
+                    </div>
+                    <div class="form-group col-md-3" ng-class="{ 'has-error' : FormConveniado.nFantasia.$invalid }">
+                        <label>Nome de Fantasia<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="nFantasia" ng-model="conveniado.nomeFantasia" type="text" class="form-control" ng-required="true" ng-minlength="2">
+                    </div>
+                    <div class="form-group col-md-3" ng-class="{ 'has-error' : FormConveniado.cnpj.$invalid }">
+                        <label>CNPJ<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="cnpj" ng-model="conveniado.cnpj" ng-required="true" type="text" class="form-control">
+                    </div>
+
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormConveniado.cep.$invalid }">
+                        <label>CEP<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input ng-keyup="adressCompleteConveniado()" name="cep" ng-model="conveniado.enderecos[0].cep" type="text" class="form-control" ng-required="true" placeholder="7 dígitos">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Logradouro</label>
+                        <input ng-model="conveniado.enderecos[0].logradouro" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Bairro</label>
+                        <input ng-model="conveniado.enderecos[0].bairro" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Cidade</label>
+                        <input ng-model="conveniado.enderecos[0].cidade" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label>UF</label>
+                        <input ng-model="conveniado.enderecos[0].uf" type="text" class="form-control">
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="well">
+                            <div class="form-inline" enctype="multipart/form-data">
+                                <div>
+                                    <label> Anexar Logotipo</label>
+                                    <input id="logo" class="inputFile" name="file" type="file" onchange="angular.element(this).scope().uploadFile(this.id, angular.element(this).scope().conveniado, 'imagemLogomarca')">
+                                </div>
+                            </div>
+
+                            <div ng-show='conveniado.imagemLogomarca' class="doc col-md-5 doc-modal">
+
+                                <label>{{conveniado.imagemLogomarca.name | limitTo : 20}}</label>
+                                <button type="button" class="close" ng-click="removeFile(conveniado,'imagemLogomarca')"><span class="span-black">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6" ng-class="{ 'has-error' : FormConveniado.favorecido.$invalid }">
+                        <label>Favorecido<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="favorecido" ng-model="conveniado.dadosBancarios[0].favorecido" type="text" ng-required="true" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormConveniado.banco.$invalid }">
+                        <label>Banco<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="banco" ng-model="conveniado.dadosBancarios[0].bancoNome" type="text" ng-required="true" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormConveniado.agencia.$invalid }">
+                        <label>Agência<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="agencia" ng-model="conveniado.dadosBancarios[0].agencia" type="text" ng-required="true" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormConveniado.conta.$invalid }">
+                        <label>Conta<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="conta" ng-model="conveniado.dadosBancarios[0].conta" type="text" ng-required="true" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button ng-disabled="FormConveniado.$invalid" ng-click="createConveniado()" type="button" class="btn btn-default btn-block"><span>Salvar Alterações</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Associado -->
+<div class="modal fade" id="cadAssociado" tabindex="-1" role="dialog" aria-labelledby="cadAssociado" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Cadastrar Associado</h4>
+            </div>
+            <div class="modal-body modal-body-ass">
+                <form name="FormAssociado">
+
+                    <div class="form-group col-md-7" ng-class="{ 'has-error' : FormAssociado.name.$invalid}">
+                        <label>Nome <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="name" ng-model="associado.nome" type="text" class="form-control" ng-required="true" ng-minlength="10">
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormAssociado.telefone.$invalid || associado.contatos[0].valor === undefined}">
+                        <label>Telefone <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input id="tel" name="telefone" ng-model="associado.contatos[0].valor" ng-pattern="/^\d{10,11}$/" type="text" class="form-control" placeholder="10 ou 11 dígitos">
+                    </div>
+
+                    <div class="form-group col-md-3" ng-class="{ 'has-error' : FormAssociado.email.$invalid || associado.contatos[1].valor === undefined}">
+                        <label>E-mail <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="email" ng-model="associado.contatos[1].valor" type="email" class="form-control" placeholder="exemplo@exemplo.com">
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormAssociado.matricula.$invalid}">
+                        <label>Matrícula 1<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="matricula" ng-model="associado.matriculas[0].codigo" type="text" class="form-control" ng-required="true">
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormAssociado.margem.$invalid}">
+                        <label>Margem 1<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="margem" ng-model="associado.matriculas[0].margem" type="number" class="form-control" ng-required="true">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Matrícula 2</label>
+                        <input name="matricula2" ng-model="associado.matriculas[1].codigo" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Margem 2</label>
+                        <input name="margem2" ng-model="associado.matriculas[1].margem" type="number" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Taxa Associativa</label>
+                        <div class="input-group">
+                            <input ng-model="associado.taxaAssociativa" ng-value="25" type="text" class="form-control col-md-2">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Tipo da Averbação</label>
+                        <select id="associadoTabela" ng-model="associado.tabela" class="form-control">
+                            <option value="0.1">TABELA 1</option>
+                            <option value="0.2">TABELA 2</option>
+                            <option value="0.3">TABELA 3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Data de Nascimento</label>
+                        <input ng-blur="checkDate()" ng-model="associado.dataNascimento" type="text" id="datepicker" class="form-control" placeholder="dd/mm/aaaa">
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormAssociado.cpf.$invalid }">
+                        <label>CPF <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="cpf" ng-model="associado.cpf" type="text" class="form-control" ng-required="true" ng-pattern="/^\d{11}$/" placeholder="11 digitos">
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormAssociado.rg.$invalid }">
+                        <label>RG <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="rg" ng-model="associado.rg" ng-minlength="5" type="text" class="form-control" ng-required="true" placeholder="mais de 5 digitos">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Orgão Emissor</label>
+                        <input ng-model="associado.orgaoEmissor" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Estado Civil</label>
+                        <select ng-model="associado.estadoCivil" class="form-control">
+                            <option value>SELECIONE</option>
+                            <option>SOLTEIRO</option>
+                            <option>CASADO</option>
+                            <option>VIÚVO</option>
+                            <option>OUTROS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Sexo</label>
+                        <select ng-model="associado.sexo" class="form-control">
+                            <option value>SELECIONE</option>
+                            <option>MASCULINO</option>
+                            <option>FEMININO</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2" ng-class="{ 'has-error' : FormAssociado.cep.$invalid }">
+                        <label>CEP <small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+                        <input name="cep" id="cep" ng-model="associado.enderecos[0].cep" ng-keyup="adressCompleteAssociado()" type="text" class="form-control" ng-required="true" placeholder="7 dígitos">
+                    </div>
+
+                    <div class="form-group col-md-5">
+                        <label>Logradouro</label>
+                        <input ng-model="associado.enderecos[0].logradouro" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Bairro</label>
+                        <input ng-model="associado.enderecos[0].bairro" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Cidade</label>
+                        <input ng-model="associado.enderecos[0].cidade" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <label>UF</label>
+                        <input ng-model="associado.enderecos[0].uf" ng-pattern="/^\w{2}$/" type="text" class="form-control">
+                    </div>
+
+
+                </form>
+                <div class="col-md-12">
+
+                    <div class="col-md-12">
+                        <div class="well">
+                            <form class="form-inline" enctype="multipart/form-data">
+                                <div class="">
+                                    <label> Anexar Comprovante de Endereço</label>
+                                    <input id="ComprovanteEndereco" class="inputFile" name="file" type="file" onchange="angular.element(this).scope().uploadFile(this.id, angular.element(this).scope().associado, 'comprovanteEndereco')">
+                                </div>
+                            </form>
+
+                            <div ng-show='associado.comprovanteEndereco' class="doc col-md-5 doc-modal">
+
+                                <label>{{associado.comprovanteEndereco.name | limitTo : 20}}</label>
+                                <button type="button" class="close" ng-click="removeFile(associado, 'comprovanteEndereco')"><span class="span-black">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="well">
+                            <div class="form-inline" enctype="multipart/form-data">
+                                <div class="">
+                                    <label> Anexar Contra-Cheque</label>
+                                    <input id="ComprovanteContraCheque" class="inputFile" name="file" type="file" onchange="angular.element(this).scope().uploadFile(this.id, angular.element(this).scope().associado, 'comprovanteContraCheque')">
+                                </div>
+                            </div>
+
+                            <div ng-show='associado.comprovanteContraCheque' class="doc col-md-5 doc-modal">
+
+                                <label>{{associado.comprovanteContraCheque.name | limitTo : 20}}</label>
+                                <button type="button" class="close" ng-click="removeFile(associado, 'comprovanteContraCheque')"><span class="span-black">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="well">
+                            <div class="form-inline" enctype="multipart/form-data">
+                                <div class="">
+                                    <label> Anexar RG</label>
+                                    <input id="ComprovanteRg" class="inputFile" name="file" type="file" onchange="angular.element(this).scope().uploadFile(this.id, angular.element(this).scope().associado, 'comprovanteRg')">
+                                </div>
+                            </div>
+
+                            <div ng-show='associado.comprovanteRg' class="doc col-md-5 doc-modal">
+
+                                <label>{{associado.comprovanteRg.name | limitTo : 20}}</label>
+                                <button type="button" class="close" ng-click="removeFile(associado, 'comprovanteRg')"><span class="span-black">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button ng-disabled="FormAssociado.$invalid" class="btn btn-default btn-block" ng-click='createAssociado()'><span>Salvar Alterações</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Confirmação-->
+<div class="modal fade" id="confirmation">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Atenção</h4>
+            </div>
+            <div class="modal-body">
+                <p id="text">Login: <strong>{{login}}</strong>
+                    <br> Senha: <strong>{{senha}}</strong>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-block" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Averbar Fatura -->
+<div class="modal fade" id="addAverbacao">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Averbar Fatura</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="panel-body container-fluid">
+
+                    <div class="container-fluid">
+
+                        <div class="form-group col-md-3">
+                            <label class="labelTitle">Matrícula</label>
+                            <p>{{faturaAssociado.matriculaCodigo}}</p>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label class="labelTitle">Nome do Associado</label>
+                            <p>{{faturaAssociado.associadoNome}}</p>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">Margem</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">R$</div>
+                                <input class="form-control" type="text" ng-model="faturaAssociado.matriculaMargem">
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">RG</label>
+                            <p>{{faturaAssociado.associadoRg}}</p>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">CPF</label>
+                            <p>{{faturaAssociado.associadoCpf}}</p>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">Valor Averbado</label>
+
+                            <div class="input-group">
+                                <div class="input-group-addon">R$</div>
+                                <input class="form-control" type="text" ng-model="faturaAssociado.valorAAverbado">
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="well">
+                                <form class="form-inline" enctype="multipart/form-data">
+                                    <div>
+                                        <label> Anexar Comprovante de Pagamento</label>
+                                        <input id="ComprovantePagamento" class="inputFile" name="file" type="file" onchange="angular.element(this).scope().uploadFile(this.id, angular.element(this).scope().faturaAssociado, 'comprovantePagamento')">
+                                    </div>
+                                </form>
+
+                                <div ng-show='faturaAssociado.comprovantePagamento' class="doc col-md-5 doc-modal">
+
+                                    <label>{{faturaAssociado.comprovantePagamento.name | limitTo : 18}}</label>
+                                    <button type="button" class="close" ng-click="removeFile(faturaAssociado, 'comprovantePagamento')"><span class="span-black">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer form-inline">
+                <!--
+                <div class="form-group col-md-6">
+                    <button type="button" ng-click='' class="btn btn-default btn-block">Editar Margem</button>
+                </div>
+-->
+                <div class="form-group col-md-12">
+                    <button type="button" ng-click="averbarFaturaAssociado(faturaAssociado)" class="btn btn-default btn-block">Confirmar Averbação</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Pagar Checkin -->
+<div class="modal fade" id="pagarConveniado">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Pagar Checkin</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="panel-body container-fluid">
+
+                    <div class="container-fluid">
+
+                        <div class=" col-md-4">
+                            <label class="labelTitle">Nome Fantasia</label>
+                            <p>{{faturaConveniado.conveniadoNomeFantasia}}</p>
+                        </div>
+
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Adiantamento</label>
+                            <p><strong>{{checkinPagamento.valorAdiantamento | currency}}</strong></p>
+                        </div>
+
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Total</label>
+                            <p><strong>{{checkinPagamento.valor | currency}}</strong></p>
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="labelTitle">Favorecido</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].favorecido}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Agência</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].agencia}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Conta</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].conta}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Banco</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].bancoNome}}</p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer form-inline">
+
+                <div class="form-group col-md-6">
+                    <button ng-disabled="!checkinPagamento.pediuAdiantamento" type="button" ng-click="adiantarPagamentoCheckinFaturaConveniado(checkinPagamento)" class="btn btn-default btn-block">Adiantamento</button>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <button type="button" ng-click="pagarCheckinFaturaConveniado(checkinPagamento)" class="btn btn-default btn-block" data-dismiss="modal">Valor Total</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Liberar Aux. Saúde -->
+<div class="modal fade" id="liberarAuxSaude">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Liberar Aux. Saúde</h4>
+            </div>
+            <div class="modal-body modal-body-auxSaude">
+                <form name="FormAuxSaude">
+
+                    <div class="form-group">
+                        <label>Matrícula a Descontar</label>
+                        <select ng-required="true" ng-model="auxilioSaude.matriculaCodigo" class="form-control">
+                            <option ng-repeat="matricula in associadoInfo.matriculas" ng-value="matricula.codigo">{{matricula.codigo}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-12" ng-class="{ 'has-error' : FormAuxSaude.valor.$invalid}">
+                        <label>Valor a Ser Liberado<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">R$</div>
+                            <input name="valor" ng-model="auxilioSaude.valor" type="text" ng-pattern="/,{0,1}g/" class="form-control">
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button ng-click="createAuxSaude(auxilioSaude)" ng-disabled="FormAuxSaude.$invalid" type="button" class="btn btn-default btn-block">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal cadCheckin -->
+<div class="modal fade" id="cadCheckin">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Cadastrar Checkin</h4>
+            </div>
+            <div class="modal-body modal-body-checkin">
+                <form name="Formchekin">
+
+                    <div class="form-group col-md-12" ng-class="{ 'has-error' : Formchekin.matricula.$invalid}">
+                        <label>Matrícula<small class="labelTitle"> [Obrigatório]</small></label>
+                        <select name="matricula" ng-required="true" ng-model="chekin.matriculaCodigo" class="form-control">
+                            <option ng-repeat="matricula in associadoInfo.matriculas" ng-value="matricula.codigo">{{matricula.codigo}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-12" ng-class="{ 'has-error' : Formchekin.cod.$invalid}">
+                        <label>Codigo do chekin<small class="labelTitle"> [Obrigatório]</small></label>
+                        <input ng-model="chekin.codigoDoCheckin" ng-required="true" class="form-control" type="text" name="cod" id="">
+                    </div>
+
+                    <div class="form-group col-md-12" ng-class="{ 'has-error' : Formchekin.valor.$invalid}">
+                        <label>Valor a Ser Liberado<small class="labelTitle"> [Obrigatório]</small>
+                        </label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">R$</div>
+                            <input name="valor" ng-model="chekin.valor" type="text" ng-required="true" class="form-control">
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button ng-click="cadastrarCheckin(chekin)" ng-disabled="Formchekin.$invalid" type="button" class="btn btn-default btn-block">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal confirmação -->
+<div class="modal fade confirmation" id="confirmacao">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Você realmente deseja continuar?</h4>
+            </div>
+            <div class="modal-footer form-inline">
+                <div class="form-group col-md-6">
+                    <button data-dismiss="modal" aria-label="Close" class="btn btn-block btn-default">NÃO</button>
+                </div>
+                <div class="form-group col-md-6">
+                    <button ng-click="execute()" class="btn btn-block btn-default"><span>SIM</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Fatura Conveniado -->
+<div class="modal fade" id="faturaConveniado">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalhes da Fatura do Conveniado</h4>
+            </div>
+            <div class="modal-body modal-body-fatura scroll">
+                <div class="col-md-12 well metadados">
+                    <div class="col-md-10">
+                        <div class=" col-md-4">
+                            <label class="labelTitle">Nome Fantasia</label>
+                            <p>{{faturaConveniado.conveniadoNomeFantasia}}</p>
+                        </div>
+                        <div class=" col-md-4">
+                            <label class="labelTitle">Razão Social</label>
+                            <p>{{faturaConveniado.conveniadoRazaoSocial}}</p>
+                        </div>
+                        <div class=" col-md-4">
+                            <label class="labelTitle">Nome Responsável</label>
+                            <p>{{faturaConveniado.responsavelByConveniado.nome}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Data Abertura</label>
+                            <p>{{faturaConveniado.abertura | date}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Data Fechamento</label>
+                            <p>{{faturaConveniado.fechamento | date}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Pago</label>
+                            <p>{{faturaConveniado.valorPago | currency}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Total</label>
+                            <p><strong>{{faturaConveniado.valorTotal | currency}}</strong></p>
+                        </div>
+                        <div class=" col-md-6">
+                            <label class="labelTitle">Favorecido</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].favorecido}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Agência</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].agencia}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Conta</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].conta}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Banco</label>
+                            <p>{{faturaConveniado.conveniadoDadosBancarios[0].bancoNome}}</p>
+                        </div>
+                    </div>
+
+                    <div ng-show="faturaConveniado.comprovantes[0]" class="col-md-2">
+                        <a ng-repeat="file in faturaConveniado.comprovantes" href="{{file.link}}" target="blank" class="doc col-md-11">
+                            <label>{{file.name | limitTo:10}}</label>
+                            <button type="button" class="close" ng-click="removeFiles(faturaConveniado.comprovantes, file, atualizarFaturaConveniado)"><span class="span-black">&times;</span>
+                            </button>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div ng-show="faturaConveniado.checkins[0]" class="col-md-12">
+                    <p class="text-center"><strong>Checkins</strong></p>
+
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Código</th>
+                            <th class="labelTitle">Nome do Associado</th>
+                            <th class="labelTitle">Matrícula</th>
+                            <th class="labelTitle">Cpf</th>
+                            <th class="labelTitle">Valor total</th>
+                            <th class="labelTitle">Valor adiantamento</th>
+                            <th class="labelTitle"></th>
+
+                        </tr>
+                        <tr ng-repeat="checkin in faturaConveniado.checkins">
+
+                            <td class="text-center">{{checkin.codigoDoCheckin}}</td>
+                            <td>{{checkin.associadoNome | limitTo: 25}}</td>
+                            <td>{{checkin.matriculaCodigo}}</td>
+                            <td>{{checkin.associadoCpf}}</td>
+                            <td>{{checkin.valor | currency}}</td>
+                            <td>{{checkin.valorAdiantamento | currency}}</td>
+                            <td>
+                                <button ng-click="showModalPagarConveniado(checkin)" ng-disabled="checkin.conveniadoPago" class="btn btn-xs btn-default">Pagar</button>
+                                <button ng-click="excluirCheckinFaturaConveniado(checkin)" ng-disabled="checkin.conveniadoPago" class="btn btn-xs btn-default">Excluir</button>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <div class="form-group col-md-6">
+                    <input id="ComprovantePagamentoCheckin" class="inputFile" name="file" type="file" onchange="angular.element(this).scope().uploadFiles(this.id, angular.element(this).scope().faturaConveniado.comprovantes, angular.element(this).scope().atualizarFaturaConveniado)" style="display: none;">
+
+                    <button type="button" ng-click="loadFile('#ComprovantePagamentoCheckin')" class="btn btn-default btn-block">Anexar Comprovante</button>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <button ng-disabled="true" ng-click="" type="button" class="btn btn-default btn-block">Pagar Fatura</button>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Fatura Associado -->
+<div class="modal fade" id="faturaAssociado">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Detalhes da Fatura do Associado</h4>
+            </div>
+            <div class="modal-body modal-body-fatura">
+                <div class="col-md-12 well metadados">
+                    <div class="col-md-10">
+                        <div class=" col-md-6">
+                            <label class="labelTitle">Nome</label>
+                            <p>{{faturaAssociado.associadoNome}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Status</label>
+                            <p>{{faturaAssociado.status}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Cpf</label>
+                            <p>{{faturaAssociado.associadoCpf}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Rg</label>
+                            <p>{{faturaAssociado.associadoRg}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Matricula</label>
+                            <p>{{faturaAssociado.matriculaCodigo}}</p>
+                        </div>
+
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Data Abertura</label>
+                            <p>{{faturaAssociado.dataAbertura | date}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Data Fechamento</label>
+                            <p>{{faturaAssociado.dataFechamento | date}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Margem</label>
+                            <p>{{faturaAssociado.matriculaMargem | currency}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Tabela</label>
+                            <p>{{faturaAssociado.tabelaUsada*10}}</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <label class="labelTitle">Taxa Associativa</label>
+                            <p>{{faturaAssociado.taxaAssociativaUsada | currency}}</p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Total</label>
+                            <p><strong>{{faturaAssociado.valorTotal | currency}}</strong></p>
+                        </div>
+                        <div class=" col-md-3">
+                            <label class="labelTitle">Valor Averbado</label>
+                            <p><strong>{{faturaAssociado.valorAverbado | currency}}</strong></p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <a ng-show="faturaAssociado.comprovantePagamento" href="{{faturaAssociado.comprovantePagamento.link}}" target="blank" class="doc col-md-11">
+                            <label>{{faturaAssociado.comprovantePagamento.name | limitTo:10}}</label>
+                            <button type="button" class="close" ng-click="removeFile(faturaAssociado.comprovantePagamento)"><span class="span-black">&times;</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div ng-show="faturaAssociado.checkins[0]">
+                    <p class="text-center"><strong>Checkins</strong></p>
+                    <table class="table table-hover">
+                        <tr>
+                            <th class="labelTitle">Código</th>
+                            <th class="labelTitle">Data uso</th>
+                            <th class="labelTitle">Data criação</th>
+                            <th class="labelTitle">Valor total</th>
+                            <th class="labelTitle"></th>
+
+                        </tr>
+                        <tr ng-repeat="checkin in faturaAssociado.checkins">
+
+                            <td class="text-center">{{checkin.codigoDoCheckin}}</td>
+                            <td>{{checkin.dataUso | date}}</td>
+                            <td>{{checkin.createAt | date}}</td>
+                            <td>{{checkin.valor | currency}}</td>
+                            <td>
+                                <button ng-click="excluirCheckin(checkin)" ng-disabled="checkin.averbado || checkin.dataUso" class="btn btn-xs btn-default">Excluir</button>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+                <div ng-show="faturaAssociado.auxiliosSaude[0]">
+                    <p class="text-center"><strong>Auxílio Saúde</strong></p>
+                    <table class="table table-hover">
+                        <tr>
+
+                            <th class="labelTitle">Data criação</th>
+                            <th class="labelTitle">Valor</th>
+                            <th class="labelTitle"></th>
+
+                        </tr>
+                        <tr ng-repeat="aux in faturaAssociado.auxiliosSaude">
+
+                            <td>{{aux.createAt | date}}</td>
+                            <td>{{aux.valor | currency}}</td>
+                            <td>
+                                <button ng-click="removeAuxSaude(aux)" ng-disabled="aux.averbado" class="btn btn-xs btn-default">Excluir</button>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button ng-disabled="faturaAssociado.status !== 'ABERTA'" ng-click="showModalAverbacao()" type="button" class="btn btn-default btn-block">Averbar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal Redefinir Senha -->
+<div class="modal fade" id="resetUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Redefinir Senha</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="panel-body container-fluid">
+
+                    <div class="container-fluid">
+
+                        <div class="form-group col-md-4">
+                            <label class="labelTitle">Login</label>
+                            <p>{{userReset.login}}</p>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <label class="labelTitle">Tipo usuário</label>
+                            <p>{{userReset.tipo}}</p>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer form-inline">
+                <!--
+                <div class="form-group col-md-6">
+                    <button type="button" ng-click="" ng-disabled="true" class="btn btn-default btn-block">Cancelar</button>
+                </div>
+-->
+                <div class="form-group col-md-12">
+                    <button type="button" ng-click="redefinirSenha()" class="btn btn-default btn-block">Redefinir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Mudar Senha -->
+<div class="modal fade" id="redefinirSenha">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span-black" aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Mudar Senha</h4>
+            </div>
+            <div class="modal-body modal-body-mudarSenha">
+
+                <div class="panel-body container-fluid">
+
+                    <div class="container-fluid">
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Senha Antiga</label>
+                            <input ng-model="antigaSenha" type="password" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Nova Senha (mínimo de 6 caracteres)</label>
+                            <input ng-model="novaSenha" type="password" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label class="labelTitle">Repita Nova Senha</label>
+                            <input ng-model="novaSenha2" type="password" class="form-control">
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer form-inline">
+
+                <div class="form-group col-md-12">
+                    <button type="button" ng-disabled="novaSenha !== novaSenha2 || antigaSenha === undefined || novaSenha === undefined || novaSenha === '' " ng-click="mudarSenha(novaSenha, antigaSenha)" class="btn btn-default btn-block">Mudar Senha</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nav Bar -->
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container-fluid col-md-offset-1 col-md-10">
+        <div class="nav navbar-nav">
+            <a class="" href="#/sistema/admin">
+                <img class="logo" alt="_logotipo" src="img/logotipo.svg">
+            </a>
+        </div>
+
+        <div class="menu pull-right">
+
+            <a href="#/sistema/admin/home" class="btn-sm btn btn-menu"><span>Início</span></a>
+            <a href="#/sistema/admin/financeiro" class="btn-sm btn btn-menu"><span>Financeiro</span></a>
+            <a href="#/sistema/admin/associado" class="btn-sm btn btn-menu"><span>Associados</span></a>
+            <a href="#/sistema/admin/conveniado" class="btn-sm btn btn-menu"><span>Conveniado</span></a>
+
+            <button id='btn-menu' type="button" class="btn-sm btn btn-menu dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span>Menu </span><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a class="link" ng-click="cadAssociado()">Cadastrar Associado</a>
+                </li>
+                <li>
+                    <a class="link" ng-click="cadConveniado()">Cadastrar Conveniado</a>
+                </li>
+                <li>
+                    <a class="link" ng-click="">Gerar Relatórios</a>
+                </li>
+                <li class="divider"></li>
+
+                <li>
+                    <a class="link" ng-click="showModalResetSenha()">Redefinir Senha</a>
+                </li>
+                <li>
+                    <a class="link" ng-click="showModalRedefinirSenha()">Mudar Senha</a>
+                </li>
+
+                <li><a class="link" ng-click="logout()">Sair</a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
