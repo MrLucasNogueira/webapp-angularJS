@@ -14,7 +14,8 @@ abaseApp.factory('urlService', function(){
     function _api(path){
         path = path || '';
         //var linkServer = "http://192.168.0.105:8080/abase/api/";
-        var urlApi = "http://45.55.30.8:8080/abase/api/";
+//        var urlApi = "http://45.55.30.8:8080/abase/api/";
+        var urlApi = "https://desenvolvimento-abase.rhcloud.com/";
         //var urlApi = "http://localhost:8080/abase/api/";
         //var urlApi = "http://abase-bracode.rhcloud.com/api/";
         return urlApi + path + '';
